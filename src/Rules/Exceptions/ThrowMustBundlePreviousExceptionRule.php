@@ -10,6 +10,7 @@ use PhpParser\NodeVisitorAbstract;
 use PHPStan\Analyser\Scope;
 use PHPStan\Broker\Broker;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 
 /**
  * When throwing into a catch block, checks that the previous exception is passed to the new "throw" clause
@@ -41,7 +42,7 @@ class ThrowMustBundlePreviousExceptionRule implements Rule
              */
             private $exceptionUsedCount = 0;
             /**
-             * @var Node\Stmt\Throw_[]
+             * @var Node\Expr\Throw_[]
              */
             private $unusedThrows = [];
 
@@ -70,14 +71,14 @@ class ThrowMustBundlePreviousExceptionRule implements Rule
                     $this->exceptionUsedCount--;
                 }
 
-                if ($node instanceof Node\Stmt\Throw_ && $this->exceptionUsedCount === 0) {
+                if ($node instanceof Node\Expr\Throw_ && $this->exceptionUsedCount === 0) {
                     $this->unusedThrows[] = $node;
                 }
                 return null;
             }
 
             /**
-             * @return Node\Stmt\Throw_[]
+             * @return Node\Expr\Throw_[]
              */
             public function getUnusedThrows(): array
             {
@@ -94,7 +95,8 @@ class ThrowMustBundlePreviousExceptionRule implements Rule
         $errors = [];
 
         foreach ($visitor->getUnusedThrows() as $throw) {
-            $errors[] = sprintf('Thrown exceptions in a catch block must bundle the previous exception (see throw statement line %d). More info: http://bit.ly/bundleexception', $throw->getLine());
+            $errors[] = RuleErrorBuilder::message(sprintf('Thrown exceptions in a catch block must bundle the previous exception (see throw statement line %d). More info: http://bit.ly/bundleexception', $throw->getLine()))
+                ->build();
         }
 
         return $errors;

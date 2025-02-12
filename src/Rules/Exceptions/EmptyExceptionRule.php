@@ -8,6 +8,7 @@ use PhpParser\Node\Stmt\Catch_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Broker\Broker;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 use function strpos;
 
 /**
@@ -29,7 +30,8 @@ class EmptyExceptionRule implements Rule
     {
         if ($this->isEmpty($node->stmts)) {
             return [
-                'Empty catch block. If you are sure this is meant to be empty, please add a "// @ignoreException" comment in the catch block.'
+                RuleErrorBuilder::message('Empty catch block. If you are sure this is meant to be empty, please add a "// @ignoreException" comment in the catch block.')
+                    ->build()
             ];
         }
 

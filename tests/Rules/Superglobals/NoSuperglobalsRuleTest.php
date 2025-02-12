@@ -1,8 +1,9 @@
 <?php
 
-namespace TheCodingMachine\PHPStan\Rules\Superglobals;
+namespace TheCodingMachine\PHPStan\Tests\Rules\Superglobals;
 
 use PHPStan\Testing\RuleTestCase;
+use TheCodingMachine\PHPStan\Rules\Superglobals\NoSuperglobalsRule;
 
 class NoSuperglobalsRuleTest extends RuleTestCase
 {

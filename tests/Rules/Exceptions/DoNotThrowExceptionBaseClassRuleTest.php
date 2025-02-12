@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PHPStan\Rules\Exceptions;
+namespace TheCodingMachine\PHPStan\Tests\Rules\Exceptions;
 
 use PHPStan\Testing\RuleTestCase;
 use TheCodingMachine\PHPStan\Rules\Exceptions\DoNotThrowExceptionBaseClassRule;

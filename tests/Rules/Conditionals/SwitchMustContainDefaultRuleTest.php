@@ -1,8 +1,9 @@
 <?php
 
-namespace TheCodingMachine\PHPStan\Rules\Conditionals;
+namespace TheCodingMachine\PHPStan\Tests\Rules\Conditionals;
 
 use PHPStan\Testing\RuleTestCase;
+use TheCodingMachine\PHPStan\Rules\Conditionals\SwitchMustContainDefaultRule;
 
 class SwitchMustContainDefaultRuleTest extends RuleTestCase
 {

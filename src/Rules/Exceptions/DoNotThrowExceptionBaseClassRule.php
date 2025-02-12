@@ -6,6 +6,7 @@ namespace TheCodingMachine\PHPStan\Rules\Exceptions;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\ObjectType;
 
 /**
@@ -18,11 +19,11 @@ class DoNotThrowExceptionBaseClassRule implements Rule
 {
     public function getNodeType(): string
     {
-        return Node\Stmt\Throw_::class;
+        return Node\Expr\Throw_::class;
     }
 
     /**
-     * @param \PhpParser\Node\Stmt\Throw_ $node
+     * @param \PhpParser\Node\Expr\Throw_ $node
      * @param \PHPStan\Analyser\Scope $scope
      * @return string[]
      */
@@ -40,7 +41,8 @@ class DoNotThrowExceptionBaseClassRule implements Rule
 
             if ($class === 'Exception') {
                 return [
-                    'Do not throw the \Exception base class. Instead, extend the \Exception base class. More info: http://bit.ly/subtypeexception'
+                    RuleErrorBuilder::message('Do not throw the \Exception base class. Instead, extend the \Exception base class. More info: http://bit.ly/subtypeexception')
+                        ->build()
                 ];
             }
         }
